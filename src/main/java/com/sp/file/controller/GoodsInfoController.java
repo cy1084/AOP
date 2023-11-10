@@ -3,6 +3,7 @@ package com.sp.file.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,11 @@ public class GoodsInfoController {
 	public int addGoodsInfos(GoodsInfoVO goods) {
 		return goodsService.insertGoodsInfo(goods);
 		// 왜 이렇게 짜야하는지 생각!! 매우 중요!!
+	}
+	
+	@PatchMapping("/goods-infos")
+	public int modifyGoodsInfos(GoodsInfoVO goods) {
+		return 1;
+		
 	}
 }

@@ -30,6 +30,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 	}
 
 	@Override
+	public int updateGoodsInfo(GoodsInfoVO goods) {
+		
+		return 0;
+	}
+
+	@Override
 	public List<GoodsInfoVO> selectGoodsInfos(GoodsInfoVO goods) {
 
 		return goodsMapper.selectGoodsInfos(goods);

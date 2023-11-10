@@ -17,6 +17,9 @@
 	<button onclick="addGoodsInfo()">등록</button>
 	
 	<script>
+		function preview(fileInput, imgId){
+		document.querySelector(`#${imgId}`).src = URL.createObjectURL(fileInput.files[0]);
+	}
 		function addFileInput(button){
 			const files=document.querySelectorAll('input[type=file]'); //대괄호는 속성/ input 태그의 type이 file인 것 불러옴
 			const fileId='file'+(files.length+1);

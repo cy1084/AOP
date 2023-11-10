@@ -78,13 +78,30 @@
 			const sorts = document.querySelectorAll('input[id^=sort]');
 
 			const formData = new FormData();
-			formData.append('giName', '홍게라면');
-			formData.append('giDesc', '맛있다');
+			formData.append('giName',document.querySelector('#giName').value);
+			formData.append('giDesc',document.querySelector('#giDesc').value);
+			//formData.append('giName', '홍게라면');
+			//formData.append('giDesc', '맛있다');
 
-			for (let i = 0; i < files.length; i++) {
-				formData.append(`goodsFiles[${i}].file`, files[i].files[0]);
+			let i = 0;
+			for (; i < files.length; i++) {
+				if(files[i].files.length){
+					formData.append(`goodsFiles[${i}].file`, files[i].files[0]);
+				}
 				formData.append(`goodsFiles[${i}].gfiSort`, sorts[i].value);
-				formData.append(`goodsFiles[${i}].status`, 'INSERT');
+				if(files[i].getAttribute('data-gfi-num')){
+					formData.append(`goodsFiles[${i}].status`,'UPDATE');
+				}else{
+					formData.append(`goodsFiles[${i}].status`, 'INSERT');
+				}
+			}
+			
+			for(const goodsFile of goodsFiles){
+				if(goodsFile.status==='DELETE'){
+					formData.append(`goodsFiles[${i}].status`, 'DELETE');
+					formData.append(`goodsFiles[${i}].gfiNum`, `${goodsFile.gfiNum}`);
+					formData.append(`goodsFiles[${i++}].gfiPath`, `${goodsFile.gfiPath}`);
+				}
 			}
 
 			const xhr = new XMLHttpRequest();
@@ -97,6 +114,30 @@
 				}
 			}
 			xhr.send(formData);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 	</script>
 
