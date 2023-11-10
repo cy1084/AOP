@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<input type="text" id="giName"><br>
+	<textarea id="giDesc"></textarea><br>
+	
+	<div id="fileDiv">
+		<input type="file" id="file1"><input type="number" id="sort1" value="1"><button onclick="addFileInput(this)">+</button><br>
+	<!--파일 순서 sort-->
+	</div>
+
+	
+	<button onclick="addGoodsInfo()">등록</button>
+	
+	<script>
+		function addFileInput(button){
+			const files=document.querySelectorAll('input[type=file]'); //대괄호는 속성/ input 태그의 type이 file인 것 불러옴
+			const fileId='file'+(files.length+1);
+			const html=`<div id="fileDiv${files.length+1}"><input type="file" id="${fileId}"><input type="text" id="sort${files.length+1}" value="${files.length+1}"><button onclick="removeFileInput('fileDiv${files.length+1}')>`-`</button>${button.outerHTML}</div>`;
+			button.remove();
+			document.querySelector('#fileDiv').insertAdjacentHTML('beforeend',html);
+			
+			/*
+			const max=files.length+1;
+			for(let i=1;i<max;i++){
+				html+='<input type="file" id="file${i}"><br>';
+			}
+			html+='<button onclick="addFileInput(this)>+</button><br>'
+			document.querySelector('#fileDiv').innerHTML=html;
+			//button.remove();
+			
+			*/
+		}
+		
+		function removeFileInput(divId){
+			document.querySelector(`#${divId}`).remove();
+		}
+		
+		function addGoodsInfo(){
+			const files=document.querySelectorAll('input[type=file]');
+			const sorts=document.querySelectorAll('input[id^=sort]');	//id 값이 sort로 시작하는 애들 가져옴
+			
+			const formData=new FormData();
+			formData.append('giName','홍게라면');
+			formData.append('giDesc','맛있다');
+			
+			for(let i=0;i<files.length;i++){
+				formData.append(`goodsFiles[${i}].file`,files[i].files[0]);
+				formData.append(`goodsFiles[${i}].gfiSort`,sorts[i].value);
+				formData.append(`goodsFiles[${i}].status`,'INSERT');
+			}
+			
+			const xhr=new XMLHttpRequest();
+			xhr.open('POST','/goods-infos');
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState===xhr.DONE){
+					if(xhr.status===200){
+						alert(xhr.responseText);
+					}
+				}
+			}
+			xhr.send(formData);
+		}
+	</script>
+
+</body>
+</html>

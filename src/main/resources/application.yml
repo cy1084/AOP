@@ -1,0 +1,32 @@
+server:
+  port: 80
+  
+spring:
+  thymeleaf:
+        cache: false
+        prefix: classpath:/templates/
+        suffix: .html
+  datasource:
+        url: jdbc:log4jdbc:mariadb://team2.chyzp8sgngoa.ap-northeast-2.rds.amazonaws.com/team2
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        username: team2
+        password: Remnant237!
+          
+        hikari:
+            minmum-idle: 1
+            maximum-pool-size: 1
+            connection-init-sql: select now()
+            
+mybatis:
+          mapper-locations: mapper/**/*.xml
+          configuration:
+           map-underscore-to-camel-case: true
+           
+upload:
+          file-path: C:\dev\upload
+          
+download:
+          file-path: file:///dev/upload/
+          resource-url: /file/**
+  
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<input type="text" id="giNum" readonly><br>
+	<input type="text" id="giName"><br>
+	<textarea id="giDesc"></textarea><br>
+	<div id="fileDiv" style="border:1px solid blue">
+		<!--<input type="file" id="file1"><input type="number" id="sort1" value="1"><button onclick="addFileInput(this)">+</button><br>-->
+
+
+	</div>
+
+
+	<button onclick="addGoodsInfo()">등록</button>
+
+	<script>
+		let goodsFiles;
+
+		window.addEventListener('load', async function () {
+			const res = await fetch('/goodsInfos/[[${param.giNum}]]');
+			const goodsInfo = await res.json();
+			goodsFiles = goodsInfo.goodsFiles;
+			document.querySelector('#giNum').value = goodsInfo.giNum;
+			document.querySelector('#giName').value = goodsInfo.giName;
+			document.querySelector('#giDesc').value = goodsInfo.giDesc;
+
+			for (let i = 0; i < goodsInfo.goodsFiles.length; i++) {
+				const goodsFile = goodsInfo.goodsFiles[i];
+				const html = `<div id="fileDiv${i + 1}">`
+					+ `<img src="${goodsFile.gfiPath}" style="width:100px" id="img${i + 1}">`
+					+ `<input type="file" id="file${i + 1}" onchange="preview(this,'img${i + 1}', ${goodsFile.gfiNum})">`
+					+ `<button onclick="removeFileInput('fileDiv${i + 1}', ${goodsFile.gfiNum})">-</button>`
+					+ `</div>`;
+				document.querySelector('#fileDiv').insertAdjacentHTML('beforeend', html);
+
+			}
+		});
+
+		//프리뷰
+		function preview(fileInput, imgId, gfiNum) {
+			for (const goodsFile of goodsFiles) {
+				if (gfiNum === goodsFile.gfiNum) {
+					goodsFile.status = 'UPDATE';
+					break;
+				}
+			}
+			document.querySelector(`#${imgId}`).src = URL.createObjectURL(fileInput.files[0]);
+		}
+
+		function addFileInput(button) {
+			const files = document.querySelectorAll('input[type=file]');
+			const fileId = 'file' + (files.length + 1);
+			const html = `<div id="fileDiv${files.length + 1}"><input type="file" id="${fileId}"><input type="number" id="sort${files.length + 1}" value="${files.length + 1}"><button onclick="removeFileInput('fileDiv${files.length + 1}')">-</button>${button.outerHTML}</div>`;
+			button.remove();
+			document.querySelector('#fileDiv').insertAdjacentHTML('beforeend', html);
+
+
+		}
+
+		function removeFileInput(divId, gfiNum) {
+			for (const goodsFile of goodsFiles) {
+				if (gfiNum === goodsFile.gfiNum) {
+					goodsFile.status = 'DELETE';
+					break;
+				}
+			}
+			document.querySelector(`#${divId}`).remove();
+		}
+
+		function addGoodsInfo() {
+			const files = document.querySelectorAll('input[type=file]');
+			const sorts = document.querySelectorAll('input[id^=sort]');
+
+			const formData = new FormData();
+			formData.append('giName', '홍게라면');
+			formData.append('giDesc', '맛있다');
+
+			for (let i = 0; i < files.length; i++) {
+				formData.append(`goodsFiles[${i}].file`, files[i].files[0]);
+				formData.append(`goodsFiles[${i}].gfiSort`, sorts[i].value);
+				formData.append(`goodsFiles[${i}].status`, 'INSERT');
+			}
+
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', '/goods-infos');
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === xhr.DONE) {
+					if (xhr.status === 200) {
+						alert(xhr.responseText);
+					}
+				}
+			}
+			xhr.send(formData);
+		}
+	</script>
+
+</body>
+
+</html>

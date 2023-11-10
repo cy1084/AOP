@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<table border="1">
+		<tr>
+			<th>상품번호</th>
+			<th>상품명</th>
+		</tr>
+		<tbody id="tBody"></tbody>
+	</table>
+	<script>
+		window.addEventListener('load', async function () {
+			const res = await fetch('/goods-infos');
+			const goodsInfos = await res.json();
+			let html = '';
+			for (const goodsInfo of goodsInfos) {
+				html += '<tr>';
+				html += `<td>${goodsInfo.giNum}</td>`;
+				html += `<td><a href='/html/goods-view?giNum=${goodsInfo.giNum}'>${goodsInfo.giName}</a></td>`;
+				html += '</tr>';
+			}
+
+			document.querySelector('#tBody').innerHTML = html;
+		}
+	)
+
+	</script>
+
+</body>
+
+</html>

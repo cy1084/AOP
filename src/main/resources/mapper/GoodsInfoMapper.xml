@@ -1,0 +1,16 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.file.mapper.GoodsFileInfoMapper">
+	<insert id="insertGoodsInfo">
+		INSERT INTO GOODS_INFO(GI_NAME,GI_DESC)
+		VALUES(#{giName}, #{giDesc})
+	</insert>
+	<select id="selectGoodsInfos">
+		SELECT GI_NUM,GI_NAME,GI_DESC
+		FROM GOODS_INFO
+	</select>
+	<select id="selectGoodsInfo">
+		SELECT GI_NUM,GI_NAME,GI_DESC
+		FROM GOODS_INFO
+		WHERE GI_NUM=#{giNum}
+	</select>
+</mapper>
