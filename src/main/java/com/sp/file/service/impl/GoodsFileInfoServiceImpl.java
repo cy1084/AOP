@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.file.mapper.GoodsFileInfoMapper;
 import com.sp.file.service.GoodsFileInfoService;
-import com.sp.vo.GoodsFileInfoVO;
+import com.sp.file.vo.GoodsFileInfoVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.file.service.GoodsFileInfoService;
 import com.sp.file.service.GoodsInfoService;
-import com.sp.vo.GoodsInfoVO;
+import com.sp.file.vo.GoodsInfoVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

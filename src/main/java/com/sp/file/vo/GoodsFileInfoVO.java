@@ -1,4 +1,4 @@
-package com.sp.vo;
+package com.sp.file.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 

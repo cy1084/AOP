@@ -2,7 +2,7 @@ package com.sp.file.mapper;
 
 import java.util.List;
 
-import com.sp.vo.GoodsInfoVO;
+import com.sp.file.vo.GoodsInfoVO;
 
 public interface GoodsInfoMapper {
 	int insertGoodsInfo(GoodsInfoVO goods);

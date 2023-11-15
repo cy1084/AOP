@@ -2,7 +2,7 @@ package com.sp.file.service;
 
 import java.util.List;
 
-import com.sp.vo.GoodsInfoVO;
+import com.sp.file.vo.GoodsInfoVO;
 
 public interface GoodsInfoService {
 	int insertGoodsInfo(GoodsInfoVO goods);

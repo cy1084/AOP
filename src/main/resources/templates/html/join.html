@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<h3>회원가입</h3>
+	<form method="POST" action="/form/join">
+		<input type="text" id="liId" placeholder="ID"><br>
+		<input type="password" id="liPwd" placeholder="Password"><br>
+		<input type="text" id="liName" placeholder="이름"><br>
+		<button>form회원가입</button> <!--화면이동-->
+		<button type="button" onclick="join()">ajax회원가입</button> <!--화면이동안함-->
+	</form>
+	<script>
+		async function join() {
+			const url = '/api/join';
+			const method = 'POST';
+			const param = {
+				liId: document.querySelector('[name=liId]').value,
+				liName: document.querySelector('[name=liName]').value,
+				liPwd: document.querySelector('[name=liPwd]').value
+			}
+			const res = await fetch(url,{
+				method : 'POST',
+				
+				
+			});
+		}
+	</script>
+
+</body>
+
+</html>

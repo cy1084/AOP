@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sp.file.mapper.GoodsInfoMapper;
 import com.sp.file.service.GoodsFileInfoService;
 import com.sp.file.service.GoodsInfoService;
-import com.sp.vo.GoodsFileInfoVO;
-import com.sp.vo.GoodsInfoVO;
+import com.sp.file.vo.GoodsFileInfoVO;
+import com.sp.file.vo.GoodsInfoVO;
 
 import lombok.AllArgsConstructor;
 
