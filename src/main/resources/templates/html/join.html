@@ -16,21 +16,30 @@
 		<button type="button" onclick="join()">ajax회원가입</button> <!--화면이동안함-->
 	</form>
 	<script>
-		async function join() {
-			const url = '/api/join';
-			const method = 'POST';
-			const param = {
-				liId: document.querySelector('[name=liId]').value,
-				liName: document.querySelector('[name=liName]').value,
-				liPwd: document.querySelector('[name=liPwd]').value
-			}
-			const res = await fetch(url,{
-				method : 'POST',
-				
-				
-			});
+	async function join(){
+		const url = '/api/join';
+		const method = 'POST';
+		const param = {
+			liId : document.querySelector('[name=liId]').value,
+			liName : document.querySelector('[name=liName]').value,
+			liPwd : document.querySelector('[name=liPwd]').value
 		}
-	</script>
+		const res = await fetch(url,{
+			method:'POST',
+			body : JSON.stringify(param),
+			headers:{
+				'Content-Type':'application/json'
+			}
+		});
+		const data = await res.json();
+		if(data && data.result===1){
+			alert('회원가입이 완료 되었습니다.');
+			location.href='/html/login';
+		}else{
+			alert('회원가입이 실패하였습니다.');
+		}
+	}
+</script>
 
 </body>
 

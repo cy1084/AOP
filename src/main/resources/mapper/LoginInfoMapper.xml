@@ -3,7 +3,7 @@
 	<select id="selectLoginInfoByLiId"
 		resultType="com.sp.file.vo.LoginInfoVO">
 		SELECT * FROM LOGIN_INFO
-		WHERE Li_Id=#{liId}
+		WHERE LI_ID=#{liId}
 	</select>
 	
 	<insert id="insertLoginInfo">

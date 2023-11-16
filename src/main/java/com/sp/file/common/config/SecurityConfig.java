@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.sp.file.service.LoginInfoService;
+import com.sp.file.common.service.LoginInfoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,8 +27,9 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity hs) throws Exception{
 		hs.authorizeHttpRequests(req->
-			req.antMatchers("/login","/join","/html/login","/html/join", "/html/login-fail")
+			req.antMatchers("/login","/form/join","/api/join","/html/login","/html/join", "/html/login-fail")
 			.permitAll()
+			.antMatchers("/html/root/index").hasRole("ROOT")
 			.anyRequest()
 			.authenticated()
 		)
@@ -46,12 +47,14 @@ public class SecurityConfig {
 		.logout(logout->
 		logout.logoutUrl("/logout")
 		.logoutSuccessUrl("/html/login")
-		.csrf(csrf->disable())
-		.userDetailsService(loginService);
-		
 		)
+		
+		.csrf(csrf->csrf.disable())
+		.exceptionHandling(ex->ex.accessDeniedPage("/html/denied"))
+		.userDetailsService(loginService);
 		return hs.build();
-	};
+		
+	}
 
 }
 

@@ -14,5 +14,10 @@ public class HTMLController {
 		return "/html/index";
 	}
 	
+	@GetMapping("/aop")
+	public void aop() {
+		
+	}
+	
 
 }

@@ -41,7 +41,7 @@ public class GoodsInfoController {
 	
 	@PatchMapping("/goods-infos")
 	public int modifyGoodsInfos(GoodsInfoVO goods) {
-		return 1;
+		return goodsService.updateGoodsInfo(goods);
 		
 	}
 }

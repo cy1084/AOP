@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sp.file.service.LoginInfoService;
+import com.sp.file.common.service.LoginInfoService;
 import com.sp.file.vo.LoginInfoVO;
 
 import lombok.RequiredArgsConstructor;

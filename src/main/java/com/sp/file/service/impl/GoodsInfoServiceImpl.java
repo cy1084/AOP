@@ -30,12 +30,6 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 	}
 
 	@Override
-	public int updateGoodsInfo(GoodsInfoVO goods) {
-		
-		return 0;
-	}
-
-	@Override
 	public List<GoodsInfoVO> selectGoodsInfos(GoodsInfoVO goods) {
 
 		return goodsMapper.selectGoodsInfos(goods);
@@ -47,6 +41,13 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 		List<GoodsFileInfoVO> files = goodsFileService.selectGoodsFileInfos(giNum);
 		goodsInfo.setGoodsFiles(files);
 		return goodsInfo;
+	}
+
+	@Override
+	public int updateGoodsInfo(GoodsInfoVO goods) {
+		int result = goodsMapper.updateGoodsInfo(goods);
+		result += goodsFileService.updateGoodsFileInfos(goods.getGiNum(), goods.getGoodsFiles());
+		return result;
 	}
 
 }
