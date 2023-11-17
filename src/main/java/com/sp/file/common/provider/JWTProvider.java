@@ -82,5 +82,7 @@ public class JWTProvider {
 		
 		log.info("login=>{}",login);
 		*/
+		
+		//yml jwt 설정 다시!
 	}
 }
