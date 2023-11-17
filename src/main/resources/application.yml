@@ -28,5 +28,7 @@ upload:
 download:
           file-path: file:///dev/upload/
           resource-url: /file/**
-  
+
+jwt:
+          value: djdflsdflsd.adfa-adf
 
