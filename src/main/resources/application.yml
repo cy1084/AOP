@@ -8,7 +8,7 @@ spring:
         suffix: .html
   datasource:
         url: jdbc:log4jdbc:mariadb://team2.chyzp8sgngoa.ap-northeast-2.rds.amazonaws.com/team2
-        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        driver-class-name: net.sf.log4jdbc.DriverSpy
         username: team2
         password: Remnant237!
           
@@ -30,5 +30,6 @@ download:
           resource-url: /file/**
 
 jwt:
-          value: djdflsdflsd.adfa-adf
+          secret: djdflsdflsd.adfa-adf
+          expire: 30000
 

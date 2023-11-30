@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.sp.file.common.filter.JWTFilter;
+import com.sp.file.common.handler.CustomAccessDeniedHandler;
+import com.sp.file.common.provider.JWTProvider;
 import com.sp.file.common.service.LoginInfoService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final LoginInfoService loginService;
+	private final CustomAccessDeniedHandler cadHandler;
+	private final JWTProvider jwtProvider;
 
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {
@@ -27,7 +33,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity hs) throws Exception{
 		hs.authorizeHttpRequests(req->
-			req.antMatchers("/login","/form/join","/api/join","/html/login","/html/join", "/html/login-fail")
+			req.antMatchers("/login","/loginAjax","/form/join","/api/join","/html/login","/html/join", "/html/login-fail")
 			.permitAll()
 			.antMatchers("/html/root/index").hasRole("ROOT")
 			.anyRequest()
@@ -35,7 +41,7 @@ public class SecurityConfig {
 		)
 		
 		.formLogin(f1->
-		f1.loginPage("/html/login") //어떤 페이지로 들어와도 로그인 페이지로 가라
+		f1.loginPage("/html/login") //어떤 페이지로 들어와도 일단 로그인 페이지로 가라
 		.usernameParameter("liId")
 		.passwordParameter("liPwd")
 		.loginProcessingUrl("/login")
@@ -50,8 +56,9 @@ public class SecurityConfig {
 		)
 		
 		.csrf(csrf->csrf.disable())
-		.exceptionHandling(ex->ex.accessDeniedPage("/html/denied"))
-		.userDetailsService(loginService);
+		.exceptionHandling(ex->ex.accessDeniedHandler(cadHandler))
+		.userDetailsService(loginService)
+		.addFilterAfter(new JWTFilter(jwtProvider),UsernamePasswordAuthenticationFilter.class);
 		return hs.build();
 		
 	}
